@@ -1,5 +1,6 @@
 package br.edu.atitus.currency_service.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ public class CurrencyController {
 		this.repository = repository;
 	}
 	
+	@Value("${server.port}")
+	private int serverPort;
+	
 	@GetMapping("/{Value}/{source}/{target}")
 	public ResponseEntity<CurrencyEntity> getCurrency(
 		@PathVariable double value, 
@@ -29,6 +33,7 @@ public class CurrencyController {
 			.orElseThrow(() -> new Exception("Currency Unsupported"));
 		
 		currency.setConvertedValue(value * currency.getConversionRate());
+		currency.setEnviroment("Currency-service running on port: " + serverPort);
 		
 		return ResponseEntity.ok(currency);
 	}
