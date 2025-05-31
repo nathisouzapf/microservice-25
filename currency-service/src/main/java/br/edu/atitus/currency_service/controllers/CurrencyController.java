@@ -32,7 +32,7 @@ public class CurrencyController {
 	@Value("${server.port}")
 	private int serverPort;
 	
-	@GetMapping("/{Value}/{source}/{target}")
+	@GetMapping("/{value}/{source}/{target}")
 	public ResponseEntity<CurrencyEntity> getCurrency(
 		@PathVariable double value, 
 		@PathVariable String source,
